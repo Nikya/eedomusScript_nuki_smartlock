@@ -1,6 +1,6 @@
 # eedomus script : Nuki smartlock
 
-![Nuki Logo](dist/img/nikya_nukismartlock "Logo Nuki smartlock by Nikya")
+![Nuki Logo](./dist/img/nikya_nukismartlock.png "Logo Nuki smartlock by Nikya")
 
 * Plugin version : 1.0
 * Origine : [GitHub/Nikya/nuki_smartlock](https://github.com/Nikya/eedomusScript_nuki_smartlock "Origine sur GitHub")
