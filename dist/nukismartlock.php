@@ -1,5 +1,5 @@
 <?php
-/*******************************************************************************
+/** ****************************************************************************
 * Nikya eedomus Script Nuki Smartlock
 ********************************************************************************
 * Plugin version : 1.0
@@ -15,11 +15,11 @@
 /** Initialisation de la réponse */
 $response = null;
 
-/** Lecture de l'functions */
+/** Lecture de la fonction */
 $function = getArg('function');
 
-/*******************************************************************************
-* Routeur d'function
+/** ****************************************************************************
+* Routeur de fonction
 */
 switch($function) {
 	case 'setup':
@@ -44,8 +44,13 @@ switch($function) {
 		$response = '{ "success" : "false", "message" : "Unknown function '.$function.' " }';
 }
 
-/*******************************************************************************
-* Enregister les informations pour communiquer avec le Bridge Nuki
+/** ****************************************************************************
+* Enregister les informations pour communiquer avec le Bridge Nuki et affiche
+* la liste des serrures connues sur le pont ciblé.
+*
+* @param $nukihost Host IP du Nuki
+* @param $nukiport Port du Nuki
+* @param $token Token du Nuki
 */
 function sdk_setup($nukihost, $nukiport, $token) {
 	saveVariable('host', $nukihost);
@@ -55,7 +60,7 @@ function sdk_setup($nukihost, $nukiport, $token) {
 	sdk_callAPI('list');
 }
 
-/*******************************************************************************
+/** ****************************************************************************
 * Enregister les informations
 * - Côté eedomus : Les id des 2 périphériques d'informations
 * - Côté Nuki : Enregistre ce script en tant que callBack
@@ -66,7 +71,7 @@ function sdk_register($eedomushost, $nukiid, $periph_id_state, $periph_id_batter
 	$eScript = explode( '/' , __FILE__);
 	$scriptName = $eScript[count($eScript)-1];
 
-	$callbackUrl = "http://$eedomushost/script";
+	$callbackUrl = "http://$eedomushost/script/";
 	$callbackUrlQuery = array(
 		'exec' => $scriptName,
 		'function' => 'incomingcall'
@@ -80,15 +85,16 @@ function sdk_register($eedomushost, $nukiid, $periph_id_state, $periph_id_batter
 	sdk_callAPI('callback/add', array('url' => $fullUrl));
 }
 
-/*******************************************************************************
+/** ****************************************************************************
 * Fonction appelée par un callback de la part de Nuki.
 * Est rappeler à chaque changement d'état.
 */
 function sdk_incomingCall() {
 	global $response;
 
+	// FIXME : Impossible à lire sur eedomus ! (file_get_contents)
 	// Le callback est accompagné d'un Json contenant les nouvelles valeurs
-	// FIXME : Impossible à lire sur eedomus !
+	//		{"nukiId": 11, "state": 1, "stateName": "locked", "batteryCritical": false}
 	// $dataRaw = file_get_contents('php://input');
 	// $nukiid = $dataRaw['nukiid'];
 	// $periph_value_state = $dataRaw['state'];
@@ -98,7 +104,14 @@ function sdk_incomingCall() {
 	$nukiid = loadVariable('nukiid');
 	$periph_value_state = -1;
 	$periph_value_batterycritical = -1;
-	$listingStr = sdk_callAPI('list');
+	// To skip Error 503 (Service Unavailable), retry many time
+	usleep(31*1000*1000); // Wait 31 secondes
+	for ($try=0; $try<6; $try++) {
+		$listingStr = sdk_callAPI('list');
+		if (strpos($listingStr, 'nukiId') !== false) // nukiId found ?
+			break;
+		usleep(3*1000*1000);
+	}
 	$listing = sdk_json_decode($listingStr);
 
 	foreach ($listing as $listed) {
@@ -108,6 +121,8 @@ function sdk_incomingCall() {
 		}
 	}
 	// end workaround
+	$periph_value_batterycritical = "true";
+	$periph_value_batterycritical = $periph_value_batterycritical == "true" ? 100 : 0;
 
 	$periph_id_state = loadVariable("periph_id_state$nukiid");
 	$periph_id_batterycritical = loadVariable("periph_id_batterycritical$nukiid");
@@ -124,7 +139,7 @@ function sdk_incomingCall() {
 	$response.= ' } ';
 }
 
-/*******************************************************************************
+/** ****************************************************************************
 * Appeler l'API de Nuki
 *
 * @param $endpoint Endpoint ciblé
@@ -152,7 +167,7 @@ function sdk_callAPI($endpoint, $params=array()) {
 	return $response;
 }
 
-/*******************************************************************************
+/** ****************************************************************************
 * Fin du script, affichage du résultat au format XML
 */
 sdk_header('text/xml');
