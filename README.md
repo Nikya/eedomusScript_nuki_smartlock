@@ -1,4 +1,4 @@
-# eedomus script : Nuki smartlock
+# eedomus script : Nuki smartlockkk
 
 ![Nuki Logo](dist/img/nikya_nukismartlock "Logo Nuki smartlock by Nikya")
 
