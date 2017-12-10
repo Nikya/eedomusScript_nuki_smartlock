@@ -1,1 +1,214 @@
-{}
+{
+    "plugin_id": "nukismrtlock",
+    "name_fr": "Nuki serrure intelligente",
+    "name_en": "Nuki smartlock",
+    "icon": "nikya_nukismartlock.png",
+    "version": "1.0",
+    "creation_date": "2017-12-10",
+    "modification_date": "2017-12-10",
+    "author": "<a href='https://github.com/Nikya' target='_blank'>Nikya</a>",
+    "description_fr": "Piloter et connaitre l'état d'une serrure intelligent <em>Nuki</em> (<a target='_blank' href='https://github.com/Nikya/eedomusScript_nuki_smartlock'>Documentation</a>)",
+    "description_en": "Operating and know the state of a smart lock <em>Nuki</em> (<a target='_blank' href='https://github.com/Nikya/eedomusScript_nuki_smartlock'>Documentation</a>)",
+    "forum_link": "http://forum.eedomus.com/viewtopic.php?f=50&t=6273",
+    "parameters": [
+        {
+            "parameter": "help_url",
+            "description": "Documentation",
+            "xtype": "displayfield",
+            "field": "style: 'padding: 3px;', value: '<a target=\\'_blank\\' href=\\'https://github.com/Nikya/eedomusScript_nuki_smartlock\\'>Github/Nikya/Nuki Smartlock</a>'"
+        },
+        {
+            "parameter": "nukihostport",
+            "description": "IP et port du Nuki ciblé (ip:port)",
+            "xtype": "textfield",
+            "field": "allowBlank:false regex:/(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})\\:(\\d+)/, regexText:'Format attendue \\'000.000.000.000:1111\\' ' "
+        },
+        {
+            "parameter": "nukiid",
+            "description": "ID du Nuki ciblé",
+            "xtype": "textfield",
+            "field": "allowBlank:false"
+        },
+        {
+            "parameter": "nukitoken",
+            "description": "Token : Jeton d'autorisation du Nuki ciblé",
+            "xtype": "textfield",
+            "field": "allowBlank:false"
+        }
+    ],
+    "scripts": [
+        {
+            "name": "nukismartlock.php"
+        }
+    ],
+    "devices": [
+        {
+            "device_id": "nuki_action",
+            "module_id": "41",
+            "type": "http",
+            "name_fr": "Nuki Smartlock - Action",
+            "icon": "nikya_nukismartlock.png",
+            "utilisation_id": "48",
+            "parameters": {
+                "value_type": "list",
+                "ignore_errors": 3,
+                "VAR1": "plugin.parameters.nukihostport",
+                "VAR2": "plugin.parameters.nukiid",
+                "VAR3": "plugin.parameters.nukitoken"
+            },
+            "values": [
+                {
+                    "value": "1",
+                    "description": "Déverrouiller",
+                    "icon": "nikya_nukismartlock.png",
+                    "http_url": "http://[VAR1]/lockAction",
+                    "http_type": "GET",
+                    "http_params": "?nukiId=[VAR2]&action=1&token=[VAR3]"
+                },
+                {
+                    "value": "2",
+                    "description": "Verrouiller",
+                    "icon": "nikya_nukismartlock.png",
+                    "http_url": "http://[VAR1]/lockAction",
+                    "http_type": "GET",
+                    "http_params": "?nukiId=[VAR2]&action=2&token=[VAR3]"
+                },
+                {
+                    "value": "3",
+                    "description": "Déloquer",
+                    "icon": "nikya_nukismartlock.png",
+                    "http_url": "http://[VAR1]/lockAction",
+                    "http_type": "GET",
+                    "http_params": "?nukiId=[VAR2]&action=3&token=[VAR3]"
+                },
+                {
+                    "value": "4",
+                    "description": "Verrouiller et partir (lock'n'go) ",
+                    "icon": "nikya_nukismartlock.png",
+                    "http_url": "http://[VAR1]/lockAction",
+                    "http_type": "GET",
+                    "http_params": "?nukiId=[VAR2]&action=4&token=[VAR3]"
+                },
+                {
+                    "value": "5",
+                    "description": "Déloquer et partir (lock'n'go) ",
+                    "icon": "nikya_nukismartlock.png",
+                    "http_url": "http://[VAR1]/lockAction",
+                    "http_type": "GET",
+                    "http_params": "?nukiId=[VAR2]&action=5&token=[VAR3]"
+                }
+            ]
+        },
+        {
+            "device_id": "nuki_state",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "Nuki Smartlock - Etat",
+            "icon": "nikya_nukismartlock.png",
+            "utilisation_id": "35",
+            "parameters": {
+                "value_type": "list"
+            },
+            "values": [
+                {
+                    "value": "0",
+                    "description": "Non étalonné",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "1",
+                    "description": "Verrouillé",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "2",
+                    "description": "Déverrouillage",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "3",
+                    "description": "Déverrouillé",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "4",
+                    "description": "Verrouillage",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "5",
+                    "description": "Déloqué",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "6",
+                    "description": "Déverrouillé (lock ‘n’ go)",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "7",
+                    "description": "Déloquage",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "254 ",
+                    "description": "Moteur bloqué",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "255 ",
+                    "description": "Indéfini",
+                    "icon": "nikya_nukismartlock.png"
+                }
+            ]
+        },
+        {
+            "device_id": "nuki_batterycritical",
+            "module_id": "51",
+            "type": "http",
+            "name_fr": "Nuki Smartlock - Etat batterie",
+            "icon": "nikya_nukismartlock.png",
+            "utilisation_id": "35",
+            "parameters": {
+                "value_type": "list"
+            },
+            "values": [
+                {
+                    "value": "0",
+                    "description": "Bon",
+                    "icon": "nikya_nukismartlock.png"
+                },
+                {
+                    "value": "100",
+                    "description": "Critique",
+                    "icon": "nikya_nukismartlock.png"
+                }
+            ]
+        },
+        {
+            "device_id": "nuki_setting",
+            "module_id": "41",
+            "type": "http",
+            "name_fr": "Nuki Smartlock - Paramétrage",
+            "icon": "nikya_nukismartlock.png",
+            "utilisation_id": "43",
+            "parameters": {
+                "value_type": "list",
+                "ignore_errors": 3,
+                "VAR1": "plugin.parameters.nukihostport",
+                "VAR2": "plugin.parameters.nukiid",
+                "VAR3": "plugin.parameters.nukitoken"
+            },
+            "values": [
+                   {
+                    "value": "1",
+                    "description": "Setup",
+                    "icon": "nikya_nukismartlock.png",
+                    "http_url": "http://[VAR1]/lockAction",
+                    "http_type": "GET",
+                    "http_params": "?nukiId=[VAR2]&action=1&token=[VAR3]"
+                   }
+				  ]
+        }
+    ]
+}
