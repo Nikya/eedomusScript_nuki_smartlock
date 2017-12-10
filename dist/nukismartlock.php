@@ -23,7 +23,7 @@ $function = getArg('function');
 */
 switch($function) {
 	case 'setup':
-		sdk_setup(getArg('nukihostport'), getArg('token'));
+		sdk_setup(getArg('nukihost_port'), getArg('token'));
 		break;
 	case 'register':
 		sdk_register(getArg('eedomushost'), getArg('nukiid'), getArg('periph_id_state'), getArg('periph_id_batterycritical'));
@@ -52,8 +52,8 @@ switch($function) {
 * @param $nukiport Port du Nuki
 * @param $token Token du Nuki
 */
-function sdk_setup($nukihostport, $token) {
-	saveVariable('nukihostport', $nukihostport);
+function sdk_setup($nukihost_port, $token) {
+	saveVariable('nukihost_port', $nukihost_port);
 	saveVariable('token', $token);
 
 	sdk_callAPI('list');
@@ -120,7 +120,6 @@ function sdk_incomingCall() {
 		}
 	}
 	// end workaround
-	$periph_value_batterycritical = "true";
 	$periph_value_batterycritical = $periph_value_batterycritical == "true" ? 100 : 0;
 
 	$periph_id_state = loadVariable("periph_id_state$nukiid");
@@ -149,16 +148,16 @@ function sdk_incomingCall() {
 function sdk_callAPI($endpoint, $params=array()) {
 	global $response;
 
-	$nukihostport = loadVariable('nukihostport');
+	$nukihost_port = loadVariable('nukihost_port');
 	$token = loadVariable('token');
 
-	if(empty($nukihostport) or empty($token)) {
+	if(empty($nukihost_port) or empty($token)) {
 		$response = '{ "success" : "false", "message" : "Need an execution of function:setup before !" }';
 		return;
 	}
 
 	$params['token'] =$token;
-	$url = "http://$nukihostport/$endpoint?".http_build_query($params);
+	$url = "http://$nukihost_port/$endpoint?".http_build_query($params);
 
 	$response = httpQuery($url);
 

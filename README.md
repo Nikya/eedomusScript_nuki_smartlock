@@ -1,4 +1,4 @@
-# eedomus script : Nuki smartlockkk
+# eedomus script : Nuki smartlock
 
 ![Nuki Logo](dist/img/nikya_nukismartlock "Logo Nuki smartlock by Nikya")
 
@@ -50,8 +50,8 @@ Informations à prendre en note, car à réutiliser ultérieurement.
 2. **Get Token (auth)** : S'authentifier sur le brige, avec l'IP et le port obtenu précédemment, en appelant l'URL suivante et en confirmant par un **appui sur le bouton physique du bridge**.
  	* URL : http://192.168.1.50:8080/auth
  	* Résutat : Un token
-3. **Setup script** : Configurer le script eedomus, avec les informations obtenues, en appelant la _fonction setup_
-5. **Register script** : Configurer le script eedomus, avec les informations obtenues, en appelant la _fonction register_
+3. **Setup script** : Configurer le script eedomus, avec les informations obtenues, en appelant la _fonction setup_ (Voir ci-après)
+5. **Register script** : Configurer le script eedomus, avec les informations obtenues, en appelant la _fonction register_  (Voir ci-après)
 
 ### Les fonctions du script
 
@@ -66,12 +66,11 @@ Configurer ce script.
 
 * params
 	- function : `setup`
-	- nukihost : IP du bridge Nuki
-	- nukiport : Port du bridge Nuki
+	- nukihost_port : IP et Port du bridge Nuki au format `ip:port`
 	- token : Token d'identification
 * Résultat
 	- (XML) Un listing des équipements trouvés sur le bridge ciblé (noter le **Nuki ID**)
-* Exemple : https://192.168.1.60/script/?exec=nukismartlock.php&function=setup&nukihost=192.168.1.50&nukiport=8080&token=909090
+* Exemple : https://192.168.1.60/script/?exec=nukismartlock.php&function=setup&nukihost_port=192.168.1.50:8080&token=909090
 
 #### Fonction _register_
 

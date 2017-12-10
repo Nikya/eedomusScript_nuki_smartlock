@@ -7,8 +7,8 @@
     "creation_date": "2017-12-10",
     "modification_date": "2017-12-10",
     "author": "<a href='https://github.com/Nikya' target='_blank'>Nikya</a>",
-    "description_fr": "Piloter et connaitre l'état d'une serrure intelligent <em>Nuki</em> (<a target='_blank' href='https://github.com/Nikya/eedomusScript_nuki_smartlock'>Documentation</a>)",
-    "description_en": "Operating and know the state of a smart lock <em>Nuki</em> (<a target='_blank' href='https://github.com/Nikya/eedomusScript_nuki_smartlock'>Documentation</a>)",
+    "description_fr": "Piloter et connaitre l'état d'une serrure intelligent <em>Nuki</em>",
+    "description_en": "Operating and know the state of a smart lock <em>Nuki</em>",
     "forum_link": "http://forum.eedomus.com/viewtopic.php?f=50&t=6273",
     "parameters": [
         {
@@ -27,7 +27,7 @@
             "parameter": "auth_url",
             "description": "Lien d'authentification",
             "xtype": "displayfield",
-            "field": "style: 'padding: 3px;', value: '<a target=\\'_blank\\' href=\\'http://192.193.194.195:8899/auth\\'>http://192.193.194.195:8899/auth</a>, pour obtenir un token : <ol><li>Cliquer le lien</li><li>Corriger l\\'URL (avec l\\'IP et le port)</li><li>Appuyer sur le bouton d\\'association du Bridge</li><li>Vous obtenez un Token</li></ol>' "
+            "field": "style: 'padding: 3px;', value: '<a target=\\'_blank\\' href=\\'http://ip_nuki:port_nuki/auth\\'>http://ip_nuki:port_nuki/auth</a>, pour obtenir un token : <ol><li>Cliquer le lien</li><li>Corriger l\\'URL (avec l\\'IP et le port)</li><li>Appuyer sur le bouton d\\'association du Bridge</li><li>Vous obtenez un Token</li></ol>' "
         },
         {
             "parameter": "nukihostport",
