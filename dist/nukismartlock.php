@@ -120,7 +120,6 @@ function sdk_incomingCall() {
 		}
 	}
 	// end workaround
-	$periph_value_batterycritical = $periph_value_batterycritical == "true" ? 100 : 0;
 
 	$periph_id_state = loadVariable("periph_id_state$nukiid");
 	$periph_id_batterycritical = loadVariable("periph_id_batterycritical$nukiid");
