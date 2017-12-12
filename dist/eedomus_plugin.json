@@ -113,8 +113,8 @@
         },
         {
             "device_id": "nuki_state",
-            "module_id": "51",
-            "type": "http",
+            "parent_id": "nuki_action",
+            "module_id": "11",
             "name_fr": "Nuki Smartlock - Etat",
             "icon": "nikya_nukismartlock.png",
             "utilisation_id": "35",
@@ -176,8 +176,8 @@
         },
         {
             "device_id": "nuki_batterycritical",
-            "module_id": "51",
-            "type": "http",
+            "parent_id": "nuki_action",
+            "module_id": "11",
             "name_fr": "Nuki Smartlock - Etat batterie",
             "icon": "nikya_nukismartlock.png",
             "utilisation_id": "35",
