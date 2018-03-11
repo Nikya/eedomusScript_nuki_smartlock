@@ -2,15 +2,15 @@
 /** ****************************************************************************
 * Nikya eedomus Script Nuki Smartlock
 ********************************************************************************
-* Plugin version : 1.0
+* Plugin version : 1.3
 * Author : Nikya
 * Origine : https://github.com/Nikya/eedomusScript_nuki_smartlock
 * Nuki Bridge HTTP-API : 1.6
 *******************************************************************************/
 
 /** Utile en cours de dev uniquement */
-//$eedomusScriptsEmulatorDatasetPath = "eedomusScriptsEmulator_dataset.json";
-//require_once ("eedomusScriptsEmulator.php");
+$eedomusScriptsEmulatorDatasetPath = "eedomusScriptsEmulator_dataset.json";
+require_once ("eedomusScriptsEmulator.php");
 
 /** Initialisation de la réponse */
 $response = null;
@@ -91,35 +91,12 @@ function sdk_register($eedomushost, $nukiid, $periph_id_state, $periph_id_batter
 function sdk_incomingCall() {
 	global $response;
 
-	// FIXME : Impossible à lire sur eedomus ! (file_get_contents)
 	// Le callback est accompagné d'un Json contenant les nouvelles valeurs
 	//		{"nukiId": 11, "state": 1, "stateName": "locked", "batteryCritical": false}
-	// $dataRaw = file_get_contents('php://input');
-	// $nukiid = $dataRaw['nukiid'];
-	// $periph_value_state = $dataRaw['state'];
-	// $periph_value_batterycritical = $dataRaw['batteryCritical'];
-
-	// FIXME : workaround
-	$nukiid = loadVariable('nukiid');
-	$periph_value_state = -1;
-	$periph_value_batterycritical = -1;
-	// To skip Error 503 (Service Unavailable), retry many time
-	usleep(31*1000*1000); // Wait 31 secondes
-	for ($try=0; $try<6; $try++) {
-		$listingStr = sdk_callAPI('list');
-		if (strpos($listingStr, 'nukiId') !== false) // nukiId found ?
-			break;
-		usleep(3*1000*1000);
-	}
-	$listing = sdk_json_decode($listingStr);
-
-	foreach ($listing as $listed) {
-		if ($listed['nukiId']==$nukiid) {
-			$periph_value_state = $listed['lastKnownState']['state'];
-			$periph_value_batterycritical = $listed['lastKnownState']['batteryCritical']===false ? 0 : 100;
-		}
-	}
-	// end workaround
+	$backData = sdk_json_decode(sdk_get_input());
+	$nukiid = $backData['nukiId'];
+	$periph_value_state = $backData['state'];
+	$periph_value_batterycritical = $backData['batteryCritical'];
 
 	$periph_id_state = loadVariable("periph_id_state$nukiid");
 	$periph_id_batterycritical = loadVariable("periph_id_batterycritical$nukiid");
