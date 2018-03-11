@@ -9,8 +9,8 @@
 *******************************************************************************/
 
 /** Utile en cours de dev uniquement */
-$eedomusScriptsEmulatorDatasetPath = "eedomusScriptsEmulator_dataset.json";
-require_once ("eedomusScriptsEmulator.php");
+//$eedomusScriptsEmulatorDatasetPath = "eedomusScriptsEmulator_dataset.json";
+//require_once ("eedomusScriptsEmulator.php");
 
 /** Initialisation de la réponse */
 $response = null;
