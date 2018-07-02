@@ -29,13 +29,14 @@ Depuis le portail _eedomus_, cliquez sur
 - `Store eedomus`
 - puis sélectionner _Nuki Smartlock_
 
-Des informations seront demandées pour la création du plugin. Puis noter les **codeAPI** des périphériques crés.
+Des informations seront demandées pour la création du plugin.  
+Puis noter les **codeAPI** des périphériques créés. (A utiliser à l'étape _register_)
 
 ## Installation manuelle
 
 1. Télécharger le projet sur GitHub : [GitHub/Nikya/nuki_smartlock](https://github.com/Nikya/eedomusScript_nuki_smartlock "Origine sur GitHub")
 1. Uploader le fichier `dist/nukismartlock.php` sur la box ([Doc eedomus script](http://doc.eedomus.com/view/Scripts#Script_HTTP_sur_la_box_eedomus))
-2. Créer manuellement les 3 périphériques et noter leur **codeAPI**
+2. Créer manuellement les 3 périphériques et noter leur **codeAPI** (A utiliser à l'étape _register_)
 
 ### Paramétrage
 
@@ -77,8 +78,8 @@ Abonner la box eedomus en tant que _Callback_ souhaitant être informé des chan
 	- function : `register`
 	- eedomushost : IP de votre eedomus qu'appelera le bridge Nuki (Na pas mettre localhost !)
 	- nukiid : Id du Nuki (Voir _fonction list_)
-	- periph_id_state : Code API eedomus du périphérique qui contiendra l'information _ETAT_ de la serrure
-	- periph_id_batterycritical : Code API eedomus du périphérique qui contiendra l'information _Batterie faible_ de la serrure
+	- periph_id_state : **codeAPI** eedomus du périphérique qui contiendra l'information _ETAT_ de la serrure
+	- periph_id_batterycritical : **codeAPI** eedomus du périphérique qui contiendra l'information _Batterie faible_ de la serrure
 * Résultat
 	- (XML) Une confirmation ou non du succès de la fonction
 * Exemple : https://192.168.1.60/script/?exec=nukismartlock.php&function=register&eedomushost=192.168.1.60&nukiid=111&periph_id_state=222&periph_id_batterycritical=333
